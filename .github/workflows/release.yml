@@ -13,27 +13,37 @@ on:
       # prerelease tags, more or less
       - "v[0-9]+.[0-9]+.[0-9]+-*"
 
-env:
-  GIT_CHGLOG_VERSION: 0.11.2
-  NODE_VERSION: 14.15.5
-
 jobs:
   release:
     runs-on: ubuntu-20.04
+    container:
+      image: golang:1.15
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: build changelog
-        id: git-chglog
-        shell: bash
+
+      - name: fetch tags
         run: |
-          curl -o git-chglog_${{ env.GIT_CHGLOG_VERSION }}_linux_amd64.tar.gz -L https://github.com/git-chglog/git-chglog/releases/download/v${{ env.GIT_CHGLOG_VERSION }}/git-chglog_${{ env.GIT_CHGLOG_VERSION }}_linux_amd64.tar.gz
-          tar xvzf git-chglog_${{ env.GIT_CHGLOG_VERSION }}_linux_amd64.tar.gz git-chglog
-          chmod +x ./git-chglog
-      - name: Generate changelog
-        run: git-chglog -c .chglog/config.yml -o RELEASE_CHANGELOG.md $(git describe --tags $(git rev-list --tags --max-count=1))
+          git fetch --tags
+
+      - name: show version
+        id: version
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - name: install
+        run: |
+          go get github.com/git-chglog/git-chglog/cmd/git-chglog
+
+      - name: generate changelog
+        run: |
+          # https://github.com/git-chglog/git-chglog#git-chglog
+          $(go env GOPATH)/bin/git-chglog \
+            -c .chglog/config.yml \
+            -o $GITHUB_WORKSPACE/RELEASE_CHANGELOG.md \
+            ${{ steps.version.outputs.VERSION }}
 
       - name: Create Release
         id: create_release
@@ -45,4 +55,4 @@ jobs:
           release_name: ${{ github.ref }}
           draft: true
           prerelease: false
-          body_path: RELEASE_CHANGELOG.md
+          body_path: $GITHUB_WORKSPACE/RELEASE_CHANGELOG.md
