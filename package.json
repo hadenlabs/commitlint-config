@@ -1,6 +1,6 @@
 {
   "name": "@hadenlabs/commitlint-config",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "commitlint-config for git commit",
   "author": "Luis Mayta <slovacus@gmail.com>",
   "license": "MIT",
