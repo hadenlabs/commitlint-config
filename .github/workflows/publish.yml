@@ -3,8 +3,6 @@ name: publish package npm
 on:
 
   push:
-    branches:
-      - develop
 
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
@@ -29,12 +27,17 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: show tag
+        id: tag
+        run: |
+          echo ::set-output name=TAG::${GITHUB_REF##*/}
+
       - name: publish package npm
         id: publish
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          tag : ${{ github.ref }}
+          tag : ${{ steps.tag.outputs.TAG }}
 
       - if: steps.publish.outputs.type != 'none'
         run: |
