@@ -24,10 +24,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: fetch tags
-        run: |
-          git fetch --tags
-
       - name: show version
         id: version
         run: |
