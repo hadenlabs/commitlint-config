@@ -14,13 +14,16 @@ email:
 #logo: docs/logo.png
 
 # License of this project
-license: 'MIT'
+license: 'LGPL-3.0'
 
 # Canonical GitHub repo
 github_repo: hadenlabs/commitlint-config
 
 # Badges to display
 badges:
+  - name: GitHub tag (latest SemVer)
+    image: https://img.shields.io/github/v/tag/hadenlabs/commitlint-config.svg?label=latest&sort=semver
+    url: https://github.com/hadenlabs/commitlint-config/releases
   - name: Lint
     image: https://github.com/hadenlabs/commitlint-config/actions/workflows/lint.yml/badge.svg?branch=develop
     url: https://github.com/hadenlabs/commitlint-config/actions
