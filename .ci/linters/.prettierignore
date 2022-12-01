@@ -9,5 +9,14 @@ coverage
 .mypy_cache/
 .build
 .terraform
+.ci/linters/.cache/*
+.cache/*
+terraform.md
 *.tpl.md
 *.enc.yaml
+vendor
+out
+.vscode-test
+.cache
+.venv
+.external_modules
