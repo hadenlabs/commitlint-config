@@ -33,4 +33,4 @@ jobs:
 
       - name: Scan Sonar
         if: ${{ !env.ACT }}
-        run: task sonar:scan
+        run: task sonar:scan --yes
