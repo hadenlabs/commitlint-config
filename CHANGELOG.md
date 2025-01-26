@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. This file uses change log convention from [keep a CHANGELOG](http://keepachangelog.com/en/0.3.0/).
 
 
+<a name="1.1.0"></a>
+## [1.1.0](https://github.com/hadenlabs/commitlint-config/compare/1.0.1...1.1.0)
+
+> 2025-01-26
+
+### ♻ Code Refactoring
+
+* change rules for commit enabled emoji ([#18](https://github.com/hadenlabs/commitlint-config/issues/18))
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/hadenlabs/commitlint-config/compare/1.0.0...1.0.1)
 
