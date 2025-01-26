@@ -8,8 +8,28 @@ All notable changes to this project will be documented in this file. This file u
 
 > 2025-01-26
 
+### Other changes
+
+* implement go path to path ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+
+### ✨ Features
+
+* change version checkout actions ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+
 ### 🐛 Bug Fixes
 
+* clean execution tsc ([#17](https://github.com/hadenlabs/commitlint-config/issues/17))
+* change version tag to latest
+* implement v to tag for publish ([#17](https://github.com/hadenlabs/commitlint-config/issues/17))
+* change publish npm ([#17](https://github.com/hadenlabs/commitlint-config/issues/17))
+* clean quotes unnecessary on secure repository ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+* implement secure repository ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+* implement enable insecure actions ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+* implement style github ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+* implement fetch tags ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+* delete arguments --app_tag unnecessary ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
+* change versions for stack on release ci ([#17](https://github.com/hadenlabs/commitlint-config/issues/17))
+* change generate tag release on workflow ([#16](https://github.com/hadenlabs/commitlint-config/issues/16))
 * change regex ci for generate changelog with emoji ([#15](https://github.com/hadenlabs/commitlint-config/issues/15))
 * implement flag yes to tasks ([#15](https://github.com/hadenlabs/commitlint-config/issues/15))
 * enabled taskfiles remote config ([#15](https://github.com/hadenlabs/commitlint-config/issues/15))
