@@ -17,6 +17,9 @@ on:
       # prerelease tags, more or less
       - "v[0-9]+.[0-9]+.[0-9]+-*"
 
+env:
+  TASK_X_REMOTE_TASKFILES: 1
+
 permissions:
   contents: read
   pull-requests: read
