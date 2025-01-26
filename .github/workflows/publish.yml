@@ -13,6 +13,7 @@ env:
   NODE_VERSION: 14.15.5
   LANG: en_US.UTF-8
   LC_ALL: en_US.UTF-8
+  TASK_X_REMOTE_TASKFILES: 1
 
 jobs:
   publish:
