@@ -154,37 +154,17 @@ title = "gitleaks config"
 
 [[rules]]
     description = "Env Var"
-    regex = '''(?i)(apikey|secret|key|api|password|pass)=[0-9a-zA-Z-_.{}]{4,120}'''
+    regex = '''(?i)(apikey|secret|key|api|password|pass|pw|host)=[0-9a-zA-Z-_.{}]{4,120}'''
     tags = ["env"]
     [rules.allowlist]
         description = "ignore value fake"
         regexes = [
             '''host=HOST''',
             '''--private-key={{.PRIVATE_KEY_FILE}}''',
+            '''PASSWORD=XXXXXX''',
+            '''password={password}''',
         ]
 
-[[rules]]
-    description = "Email"
-    regex = '''[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}'''
-    tags = ["email"]
-    [rules.allowlist]
-        description = "ignore emails"
-        regexes = [
-            '''[a-zA-Z0-9._%+-]+@users.noreply.github.com''',
-            '''[a-zA-Z0-9._%+-]+@yopmail.com''',
-            '''[a-zA-Z0-9._%+-]+@pre-commit-hooks-test.com''',
-            '''security@hadenlabs.com''',
-            '''git@github.com''',
-            '''git@gitlab.com''',
-            '''slovacus@gmail.com''',
-            '''luis@hadenlabs.com''',
-            '''security@hadenlabs.com''',
-            '''hola@hadenlabs.com''',
-            '''hello@hadenlabs.com''',
-            '''support@hadenlbas.com''',
-            '''support@hadenlabs.com''',
-            '''dum-u@hadenlabs.com''',
-        ]
 
 [[rules]]
     description = "High Entropy"
@@ -266,9 +246,11 @@ title = "gitleaks config"
 [whitelist]
   description = "image and html allowlists"
   paths = [
-    '''^vendor/(.*?)$''',
-    '''^node_modules/(.*?)$''',
-    '''^test/fixtures/keys/(.*?)$''',
+    '''^vendor/''',
+    '''^bower_components/''',
+    '''^public/''',
+    '''^node_modules/''',
+    '''^theme/''',
   ]
 
   files = [
@@ -280,3 +262,5 @@ title = "gitleaks config"
     '''^sonar-project.properties$''',
     '''^test/fixtures/keys/.*-test.*$''',
   ]
+
+  commits = []
