@@ -38,7 +38,7 @@ jobs:
         uses: battila7/get-version-action@v2
 
       - name: Generate changelog
-        run: task changelog:tag --APP_TAG=${{ steps.get_version.outputs.version-without-v }} --yes
+        run: task changelog:tag APP_TAG=${{ steps.get_version.outputs.version-without-v }} --yes
 
       - name: Create Release
         if: ${{ !env.ACT }}
