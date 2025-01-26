@@ -20,20 +20,27 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Check out a copy of the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - id: get_version
+        uses: battila7/get-version-action@v2
+
       - name: show tag
         id: tag
         run: |
-          echo ::set-output name=TAG::${GITHUB_REF##*/}
+          echo ::set-output name=TAG::${{ steps.get_version.outputs.version-without-v }}
 
       - name: publish package npm
         id: publish
-        uses: JS-DevTools/npm-publish@v1
+        uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
           tag: ${{ steps.tag.outputs.TAG }}
