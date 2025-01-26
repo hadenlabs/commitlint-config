@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. This file uses change log convention from [keep a CHANGELOG](http://keepachangelog.com/en/0.3.0/).
 
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/hadenlabs/commitlint-config/compare/1.0.0...1.0.1)
+
+> 2025-01-26
+
+### 🐛 Bug Fixes
+
+* change regex ci for generate changelog with emoji ([#15](https://github.com/hadenlabs/commitlint-config/issues/15))
+* implement flag yes to tasks ([#15](https://github.com/hadenlabs/commitlint-config/issues/15))
+* enabled taskfiles remote config ([#15](https://github.com/hadenlabs/commitlint-config/issues/15))
+
+
 <a name="1.0.0"></a>
 ## [1.0.0](https://github.com/hadenlabs/commitlint-config/compare/0.1.0...1.0.0)
 
@@ -34,6 +46,7 @@ All notable changes to this project will be documented in this file. This file u
 
 ### ♻ Code Refactoring
 
+* structure using standard code ([#14](https://github.com/hadenlabs/commitlint-config/issues/14))
 * structure project ([#12](https://github.com/hadenlabs/commitlint-config/issues/12))
 * dependences python ([#10](https://github.com/hadenlabs/commitlint-config/issues/10))
 * generator readme ([#10](https://github.com/hadenlabs/commitlint-config/issues/10))
