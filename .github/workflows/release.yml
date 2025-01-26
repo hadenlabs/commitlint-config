@@ -15,10 +15,10 @@ env:
 
 jobs:
   release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     if: startsWith(github.ref, 'refs/tags/')
     container:
-      image: golang:1.19
+      image: golang:1.23
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v3
@@ -37,12 +37,8 @@ jobs:
       - id: get_version
         uses: battila7/get-version-action@v2
 
-      - name: set vars to github
-        run: |
-          echo "APP_TAG=${{ steps.get_version.outputs.version-without-v }}" >> $GITHUB_ENV
-
       - name: Generate changelog
-        run: task changelog:tag --yes
+        run: task changelog:tag --APP_TAG=${{ steps.get_version.outputs.version-without-v }} --yes
 
       - name: Create Release
         if: ${{ !env.ACT }}
@@ -51,8 +47,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          tag_name: ${{ env.APP_TAG }}
-          release_name: ${{ env.APP_TAG }}
+          tag_name: ${{ steps.get_version.outputs.version-without-v }}
+          release_name: ${{ steps.get_version.outputs.version-without-v }}
           draft: false
           prerelease: false
           body_path: ${{ env.TMP_CHANGELOG_FILENAME }}
