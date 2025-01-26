@@ -14,7 +14,7 @@ email:
 # logo: docs/logo.png
 
 # License of this project
-license: 'LGPL-3.0'
+license: "LGPL-3.0"
 
 # Canonical GitHub repo
 github_repo: hadenlabs/commitlint-config
@@ -60,8 +60,8 @@ usages:
   - docs/usage.md
 
 installation:
-  - 'docs/include/installation/yarn.md'
-  - 'docs/include/installation/npm.md'
+  - "docs/include/installation/yarn.md"
+  - "docs/include/installation/npm.md"
 
 examples:
-  - 'docs/examples/common.md'
+  - "docs/examples/common.md"
