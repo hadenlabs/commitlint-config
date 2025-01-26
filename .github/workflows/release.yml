@@ -21,6 +21,9 @@ jobs:
     container:
       image: golang:1.23
     steps:
+      - name: Enabled secure repository
+        run: git config --global --add safe.directory ${GITHUB_WORKSPACE}"
+
       - name: Check out a copy of the repo
         uses: actions/checkout@v4
         with:
