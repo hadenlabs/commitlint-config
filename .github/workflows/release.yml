@@ -29,10 +29,10 @@ jobs:
         uses: arduino/setup-task@v1
 
       - name: Install changelog
-        run: task changelog:install
+        run: task changelog:install --yes
 
       - name: Check dependences
-        run: task changelog:check
+        run: task changelog:check --yes
 
       - id: get_version
         uses: battila7/get-version-action@v2
@@ -42,7 +42,7 @@ jobs:
           echo "APP_TAG=${{ steps.get_version.outputs.version-without-v }}" >> $GITHUB_ENV
 
       - name: Generate changelog
-        run: task changelog:tag
+        run: task changelog:tag --yes
 
       - name: Create Release
         if: ${{ !env.ACT }}
