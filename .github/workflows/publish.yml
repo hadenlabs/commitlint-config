@@ -43,7 +43,7 @@ jobs:
         uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          tag: ${{ steps.tag.outputs.TAG }}
+          tag: v${{ steps.tag.outputs.TAG }}
 
       - if: steps.publish.outputs.type != 'none'
         run: |
