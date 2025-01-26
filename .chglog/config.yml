@@ -1,4 +1,4 @@
-style: github
+style: ""
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
@@ -40,7 +40,7 @@ options:
       ci: 👷 CI changes
 
   header:
-    pattern: "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$"
+    pattern: "^(\\w+)(?:\\s*.*)?(?:\\s*\\((.*?)\\))?:\\s*(.*)$"
     pattern_maps:
       - Type
       - Scope
