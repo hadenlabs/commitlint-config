@@ -29,6 +29,10 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v1
 
+      - name: Added go path to path
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+
       - name: Install changelog
         run: task changelog:install --yes
 
