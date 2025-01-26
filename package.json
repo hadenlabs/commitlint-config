@@ -6,7 +6,7 @@
   "license": "LGPL-3.0",
   "main": "commitlint.config.js",
   "scripts": {
-    "build": "./node_modules/.bin/tsc -p",
+    "build": "tsc -p",
     "build:tool": "yarn run build ./tools/",
     "clean": "rimraf -rf dist",
     "clean:all": "yarn clean:cache && yarn clean:build:all && yarn clean node_modules",
