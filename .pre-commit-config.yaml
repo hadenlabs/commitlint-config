@@ -1,6 +1,9 @@
 ci:
   autoupdate_schedule: monthly
 
+default_language_version:
+  node: 24.11.1
+
 default_stages:
   - pre-commit
 exclude: >
@@ -9,8 +12,10 @@ exclude: >
     .+\.node_modules\/.*$|
     .+\.external_modules.*$|
     .+\.terraform.*$|
+    pnpm-lock.yaml|
     .+\.venv.*$|
     .+\.lock$|
+    .+\.mdx$|
   )$
 
 repos:
@@ -22,12 +27,15 @@ repos:
           - --ignore-words=.ci/linters/.codespell-ignores
         exclude: >
           (?x)^(
+            go.mod|
+            go.sum|
+            app/ia/datasets\/.*$|
+            openapi.yaml|
             .+\.vendor\/.*$|
             .+\.node_modules\/.*$|
             .+\.sops.*$|
             .+\.lock$|
-            go.mod|
-            go.sum|
+            .+\.mdx$|
           )$
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
     rev: v9.23.0
@@ -70,7 +78,6 @@ repos:
       - id: check-yaml
         args:
           - --allow-multiple-documents
-      - id: check-byte-order-marker
       - id: check-ast
       - id: debug-statements
       - id: check-docstring-first
