@@ -146,7 +146,7 @@ ignore_missing_imports = true
 omit = ["tests/*"]
 
 [tool.bumpversion]
-current_version = "0.0.0"
+current_version = "1.1.1"
 parse = '''
 (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
 (?:-(?P<pre_release>(alpha|beta|rc))\.(?P<pre_release_number>\d+))?
