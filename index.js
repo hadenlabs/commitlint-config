@@ -10,7 +10,7 @@ module.exports = {
     "footer-leading-blank": [2, "always"],
     "header-max-length": [2, "always", 80],
     "scope-case": [2, "always", "lower-case"],
-    "subject-case": [2, "never", ["sentence-case", "start-case", "pascal-case", "upper-case"]],
+    "subject-case": [2, "never", ["start-case", "pascal-case", "upper-case"]],
     "subject-empty": [2, "never"],
     "subject-exclamation-mark": [2, "never"],
     "subject-full-stop": [2, "never", "."],
@@ -26,12 +26,16 @@ module.exports = {
         "docs",
         "feat",
         "fix",
+        "hotfix",
         "perf",
         "refactor",
         "revert",
         "style",
         "test",
-        "sample"
+        "sample",
+        "package",
+        "wip",
+        "deprecate"
       ]
     ]
   }
