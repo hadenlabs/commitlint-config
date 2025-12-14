@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. This file uses change log convention from [keep a CHANGELOG](http://keepachangelog.com/en/0.3.0/).
 
 
+<a name="1.2.0"></a>
+## [1.2.0](https://github.com/hadenlabs/commitlint-config/compare/1.1.1...1.2.0)
+
+> 2025-12-14
+
+### ✨ Features
+
+* HAD-4 implement configuration commits emojis
+* HAD-4 implement configuration emoji commits
+
+### 🎨 Code Refactoring
+
+* HAD-4 change task local to remote
+
+### 🐛 Bug Fixes
+
+* HAD-4 change version 0.0.0 to 1.1.1
+* HAD-4 validation hooks pre-commit
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/hadenlabs/commitlint-config/compare/1.1.0...1.1.1)
 
@@ -18,7 +38,7 @@ All notable changes to this project will be documented in this file. This file u
 
 > 2025-01-26
 
-### ♻ Code Refactoring
+### 🎨 Code Refactoring
 
 * change rules for commit enabled emoji ([#18](https://github.com/hadenlabs/commitlint-config/issues/18))
 
@@ -84,7 +104,11 @@ All notable changes to this project will be documented in this file. This file u
 * implement generator readme ([#1](https://github.com/hadenlabs/commitlint-config/issues/1))
 * implement settings project ([#1](https://github.com/hadenlabs/commitlint-config/issues/1))
 
-### ♻ Code Refactoring
+### ⚡ Performance Improvements
+
+* clean tags actions github ([#5](https://github.com/hadenlabs/commitlint-config/issues/5))
+
+### 🎨 Code Refactoring
 
 * structure using standard code ([#14](https://github.com/hadenlabs/commitlint-config/issues/14))
 * structure project ([#12](https://github.com/hadenlabs/commitlint-config/issues/12))
@@ -94,10 +118,6 @@ All notable changes to this project will be documented in this file. This file u
 * actions make ([#10](https://github.com/hadenlabs/commitlint-config/issues/10))
 * hooks validation code ([#10](https://github.com/hadenlabs/commitlint-config/issues/10))
 * github actions release ([#5](https://github.com/hadenlabs/commitlint-config/issues/5))
-
-### ⚡ Performance Improvements
-
-* clean tags actions github ([#5](https://github.com/hadenlabs/commitlint-config/issues/5))
 
 ### 🐛 Bug Fixes
 
@@ -119,11 +139,11 @@ All notable changes to this project will be documented in this file. This file u
 * implement generator readme ([#1](https://github.com/hadenlabs/commitlint-config/issues/1))
 * implement settings project ([#1](https://github.com/hadenlabs/commitlint-config/issues/1))
 
-### ♻ Code Refactoring
-
-* github actions release ([#5](https://github.com/hadenlabs/commitlint-config/issues/5))
-
 ### ⚡ Performance Improvements
 
 * clean tags actions github ([#5](https://github.com/hadenlabs/commitlint-config/issues/5))
+
+### 🎨 Code Refactoring
+
+* github actions release ([#5](https://github.com/hadenlabs/commitlint-config/issues/5))
 
