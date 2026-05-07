@@ -1,0 +1,61 @@
+{
+  "name": "@hadenlabs/commitlint-config-core",
+  "version": "0.0.0",
+  "description": "commitlint-config for git commit",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "author": "Lucho <luis@hadenlabs.com>",
+  "private": false,
+  "type": "module",
+  "license": "LGPL-3.0",
+  "keywords": ["commitlint", "git", "commits", "hadenlabs"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hadenlabs/commitlint-config",
+    "directory": "packages/commitlint-config-core"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "bugs": {
+    "url": "https://github.com/hadenlabs/commitlint-config/issues"
+  },
+  "homepage": "https://github.com/hadenlabs/commitlint-config#readme",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun build src/index.ts --outfile=dist/index.js --target=node --format=esm && tsc --emitDeclarationOnly",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "lint": "biome lint .",
+    "fix": "biome lint . --write --max-diagnostics=none --unsafe",
+    "format": "biome format . --write",
+    "check": "biome check --write .",
+    "check:ci": "biome check .",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "husky": "^5.1.3",
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.7",
+    "@commitlint/types": "^20.5.0",
+    "@types/bun": "^1.3.0",
+    "@types/node": "^22.0.0",
+    "bun-types": "1.3.9",
+    "esbuild": "^0.27.4",
+    "typescript": "^5.9.3"
+  },
+  "trustedDependencies": [
+    "@ast-grep/cli"
+  ]
+}

@@ -1,0 +1,59 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: commitlint-config-core
+
+email:
+  support: team@hadenlabs.com
+
+# Logo for this project
+# logo: docs/logo.png
+
+# License of this project
+license: "Proprietary"
+
+# Canonical GitHub repo
+github_host: github.com
+github_repo: hadenlabs/commitlint-config
+
+# Badges to display
+badges:
+  - name: pipeline status
+    image: https://github.com/hadenlabs/commitlint-config/actions/workflows/lint.yml/badge.svg?branch=main
+    url: https://github.com/hadenlabs/commitlint-config/commits/main
+  - name: pre-commit
+    image: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
+    url: https://github.com/pre-commit/pre-commit
+  - name: Conventional Commits
+    image: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow
+    url: https://conventionalcommits.org
+  - name: KeepAChangelog
+    image: https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.0.0-orange
+    url: https://keepachangelog.com
+
+# Short description of this project
+description: |-
+  commitlint-config-core
+
+requirements: |-
+
+  This is a list of plugins that need to be installed previously to enjoy all the goodies of this configuration:
+
+  - [gomplate](https://github.com/hairyhenderson/gomplate)
+  - [python](https://www.python.org)
+  - [taskfile](https://github.com/go-task/task)
+
+
+# How to use this project
+usages:
+  - packages/commitlint-config-core/docs/usage.md
+
+installation:
+  - packages/commitlint-config-core/docs/installation/yarn.md
+  - packages/commitlint-config-core/docs/installation/npm.md
+  - packages/commitlint-config-core/docs/installation/pnpm.md
+  - packages/commitlint-config-core/docs/installation/bun.md

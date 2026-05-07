@@ -1,0 +1,57 @@
+import type { UserConfig } from "@commitlint/types";
+
+const config: UserConfig = {
+	parserPreset: {
+		parserOpts: {
+			headerPattern: /^(\w+)(?:\((.*?)\))?:\s*(.*)$/,
+			headerCorrespondence: ["type", "scope", "subject"],
+		},
+	},
+
+	rules: {
+		"body-leading-blank": [2, "always"],
+
+		"footer-leading-blank": [2, "always"],
+
+		"header-max-length": [2, "always", 80],
+
+		"scope-case": [2, "always", "lower-case"],
+
+		"subject-case": [2, "never", ["start-case", "pascal-case", "upper-case"]],
+
+		"subject-empty": [2, "never"],
+
+		"subject-exclamation-mark": [2, "never"],
+
+		"subject-full-stop": [2, "never", "."],
+
+		"type-case": [2, "always", "lower-case"],
+
+		"type-empty": [2, "never"],
+
+		"type-enum": [
+			2,
+			"always",
+			[
+				"build",
+				"chore",
+				"ci",
+				"docs",
+				"feat",
+				"fix",
+				"hotfix",
+				"perf",
+				"refactor",
+				"revert",
+				"style",
+				"test",
+				"sample",
+				"package",
+				"wip",
+				"deprecate",
+			],
+		],
+	},
+};
+
+export default config;

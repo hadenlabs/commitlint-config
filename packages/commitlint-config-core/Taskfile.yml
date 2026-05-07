@@ -1,0 +1,55 @@
+---
+version: "3"
+
+tasks:
+  readme:
+    run: once
+    desc: Generate Readme
+    silent: true
+    cmds:
+      - >-
+        gomplate \
+          --file packages/commitlint-config-core/provision/templates/README.tpl.md \
+          --out packages/commitlint-config-core/README.md \
+          --datasource config=packages/commitlint-config-core/provision/generators/README.yaml \
+          --datasource repo=.
+
+  version:major:
+    run: once
+    desc: version major
+    silent: true
+    cmds:
+      - >-
+        uvx bump-my-version bump major --config-file packages/commitlint-config-core/bump-docs.toml
+
+  version:minor:
+    run: once
+    desc: version minor
+    silent: true
+    cmds:
+      - >-
+        uvx bump-my-version bump minor --config-file packages/commitlint-config-core/bump-docs.toml
+
+  version:patch:
+    run: once
+    desc: version patch
+    silent: true
+    cmds:
+      - >-
+        uvx bump-my-version bump patch --config-file packages/commitlint-config-core/bump-docs.toml
+
+  build:
+    run: once
+    desc: build
+    silent: true
+    cmds:
+      - >-
+        turbo run build --filter=@hadenlabs/commitlint-config-core
+
+  test:
+    run: once
+    desc: test
+    silent: true
+    cmds:
+      - >-
+        turbo run test --filter=@hadenlabs/commitlint-config-core
