@@ -1,0 +1,3 @@
+{
+  "plugins": ["./packages/commitlint-config-core/dist/index.js"]
+}

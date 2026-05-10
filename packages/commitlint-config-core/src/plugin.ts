@@ -1,7 +1,21 @@
 // Commitlint custom rules plugin
 // Provider-aware rules derived from jasper.toml configuration
 
+import type { Rule, RuleConfigCondition } from "@commitlint/types";
 import type { ResolvedConfig, ValidType } from "./config";
+
+// Commitlint parsed commit structure (compatible with conventional-commits-parser)
+interface ParsedCommit {
+	header?: string | null;
+	type?: string | null;
+	scope?: string | null;
+	subject?: string | null;
+	body?: string | null;
+	footer?: string | null;
+}
+
+// Rule function type matching commitlint's PluginRule format
+type PluginRule = Rule<ParsedCommit> & ((parsed: ParsedCommit, when?: RuleConfigCondition) => [boolean, string?]);
 import {
 	buildResolvedConfig,
 	loadGojiConfig,
@@ -132,118 +146,115 @@ function parseHeader(header: string): {
  * Jira: Requires Jira key at START of subject (e.g., HAD-123)
  * GitHub/GitLab: Allows #number format or no key requirement
  * Auto: Warn that provider needs resolution
+ *
+ * @param parsed - Parsed commit message
+ * @param when - Rule condition ('always' or 'never')
+ * @returns [valid, message] tuple
  */
-export const subjectKeyRule = {
-	description: `require issue key at start of subject (${getProviderDescription()})`,
-	lint: (parsed: { subject?: string }): [boolean, string] => {
-		const { subject } = parsed;
-		const config = getResolvedConfig();
+export const subjectKeyRule: PluginRule = (
+	parsed: ParsedCommit,
+	_when?: RuleConfigCondition,
+): [boolean, string?] => {
+	const subject = parsed.subject;
 
-		if (!subject) {
-			return [false, "subject-key rule requires subject to be present"];
-		}
+	if (!subject) {
+		return [false, "subject-key rule requires subject to be present"];
+	}
 
-		// Handle "auto" provider - require explicit configuration
-		if (config.provider === "auto") {
-			// Cannot validate without deterministic provider
-			// Fail with clear message about configuration
-			return [
-				false,
-				`Cannot validate commit with "auto" provider resolution.\n` +
-					`  - Set explicit provider in jasper.toml: [issueTracking].provider = "jira"|"github"|"gitlab"\n` +
-					`  - Or ensure scm.provider is not "auto"`,
-			];
-		}
+	const config = getResolvedConfig();
 
-		// Jira: require key at START of subject
-		if (config.provider === "jira") {
-			try {
-				const jiraPattern = getJiraKeyPattern();
-				if (!jiraPattern.test(subject)) {
-					return [
-						false,
-						`subject must start with ${getProviderDescription()} but found: "${subject}"`,
-					];
-				}
-			} catch (_error) {
-				// projectKey not configured
+	// Handle "auto" provider - require explicit configuration
+	if (config.provider === "auto") {
+		// Cannot validate without deterministic provider
+		// Fail with clear message about configuration
+		return [
+			false,
+			`Cannot validate commit with "auto" provider resolution.\n` +
+				`  - Set explicit provider in jasper.toml: [issueTracking].provider = "jira"|"github"|"gitlab"\n` +
+				`  - Or ensure scm.provider is not "auto"`,
+		];
+	}
+
+	// Jira: require key at START of subject
+	if (config.provider === "jira") {
+		try {
+			const jiraPattern = getJiraKeyPattern();
+			if (!jiraPattern.test(subject)) {
 				return [
 					false,
-					`Jira provider configured but projectKey not set in jasper.toml`,
+					`subject must start with ${getProviderDescription()} but found: "${subject}"`,
 				];
 			}
+		} catch (_error) {
+			// projectKey not configured
+			return [
+				false,
+				`Jira provider configured but projectKey not set in jasper.toml`,
+			];
 		}
+	}
 
-		// GitHub/GitLab: allow their formats (no strict key requirement)
-		// These providers use #number in parentheses at end, not start of subject
-		if (config.provider === "github" || config.provider === "gitlab") {
-			// No strict key-at-start requirement for these providers
-			// The format allows "(#123)" at end which is handled by parser
-			// Subject itself can be any format
-			return [true, ""];
-		}
-
+	// GitHub/GitLab: allow their formats (no strict key requirement)
+	// These providers use #number in parentheses at end, not start of subject
+	if (config.provider === "github" || config.provider === "gitlab") {
+		// No strict key-at-start requirement for these providers
+		// The format allows "(#123)" at end which is handled by parser
+		// Subject itself can be any format
 		return [true, ""];
-	},
-	ex: (): string => {
-		const config = getResolvedConfig();
-		if (config.provider === "jira" && config.projectKey) {
-			return `fix 🐛 (core): ${config.projectKey}-123 resolve bug`;
-		}
-		if (config.provider === "github") {
-			return "fix 🐛 (core): resolve bug (#123)";
-		}
-		return "fix 🐛 (core): resolve bug";
-	},
+	}
+
+	return [true, ""];
 };
 
 /**
  * Header emoji rule - requires valid emoji from policy
+ *
+ * @param parsed - Parsed commit message
+ * @param when - Rule condition ('always' or 'never')
+ * @returns [valid, message] tuple
  */
-export const headerEmojiRule = {
-	description: "require valid emoji in header",
-	lint: (parsed: { raw?: string }): [boolean, string] => {
-		const header = parsed.raw;
-		if (!header)
-			return [false, "header-emoji rule requires commit message header"];
+export const headerEmojiRule: PluginRule = (
+	parsed: ParsedCommit,
+	_when?: RuleConfigCondition,
+): [boolean, string?] => {
+	const header = parsed.header;
+	if (!header)
+		return [false, "header-emoji rule requires commit message header"];
 
-		const { emoji } = parseHeader(header);
-		if (!emoji) return [false, "header-emoji rule requires emoji in header"];
+	const { emoji } = parseHeader(header);
+	if (!emoji) return [false, "header-emoji rule requires emoji in header"];
 
-		const validEmojis = getValidEmojis();
-		if (!validEmojis.includes(emoji)) {
-			return [
-				false,
-				`emoji must be one of [${validEmojis.join(", ")}] but found: "${emoji}"`,
-			];
-		}
-		return [true, ""];
-	},
-	ex: (): string => "feat ✨ (core): add new feature",
+	const validEmojis = getValidEmojis();
+	if (!validEmojis.includes(emoji)) {
+		return [
+			false,
+			`emoji must be one of [${validEmojis.join(", ")}] but found: "${emoji}"`,
+		];
+	}
+	return [true, ""];
 };
 
-// Export scope rule for extensibility
-export const scopeCaseRule = {
-	description: "require lowercase scope",
-	lint: (parsed: { scope?: string }): [boolean, string] => {
-		const { scope } = parsed;
-		// Scope is optional, only validate if present
-		if (scope && scope !== scope.toLowerCase()) {
-			return [false, `scope must be lowercase but found: "${scope}"`];
-		}
-		return [true, ""];
-	},
-	ex: (): string => "feat ✨ (core): add feature",
+/**
+ * Scope case rule - requires lowercase scope (for extensibility)
+ *
+ * @param parsed - Parsed commit message
+ * @param when - Rule condition ('always' or 'never')
+ * @returns [valid, message] tuple
+ */
+export const scopeCaseRule: PluginRule = (
+	parsed: ParsedCommit,
+	_when?: RuleConfigCondition,
+): [boolean, string?] => {
+	const scope = parsed.scope;
+	// Scope is optional, only validate if present
+	if (scope && scope !== scope.toLowerCase()) {
+		return [false, `scope must be lowercase but found: "${scope}"`];
+	}
+	return [true, ""];
 };
 
 // Plugin object with provider-aware rules
-const plugin: {
-	rules: {
-		"subject-key": typeof subjectKeyRule;
-		"header-emoji": typeof headerEmojiRule;
-		"scope-case-custom": typeof scopeCaseRule;
-	};
-} = {
+const plugin = {
 	rules: {
 		"subject-key": subjectKeyRule,
 		"header-emoji": headerEmojiRule,

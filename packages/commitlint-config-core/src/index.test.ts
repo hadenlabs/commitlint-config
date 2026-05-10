@@ -64,7 +64,7 @@ describe("commitlint-config-core", () => {
 				| undefined;
 			expect(p?.rules).toBeDefined();
 			expect(p?.rules?.["subject-key"]).toBeDefined();
-			expect(typeof p?.rules?.["subject-key"]).toBe("object");
+			expect(typeof p?.rules?.["subject-key"]).toBe("function");
 		});
 
 		it("should export header-emoji rule in plugin", () => {
@@ -73,7 +73,25 @@ describe("commitlint-config-core", () => {
 				| undefined;
 			expect(p?.rules).toBeDefined();
 			expect(p?.rules?.["header-emoji"]).toBeDefined();
-			expect(typeof p?.rules?.["header-emoji"]).toBe("object");
+			expect(typeof p?.rules?.["header-emoji"]).toBe("function");
+		});
+
+		it("should export scope-case-custom rule in plugin", () => {
+			const p = config.plugins?.[0] as
+				| { rules?: Record<string, unknown> }
+				| undefined;
+			expect(p?.rules).toBeDefined();
+			expect(p?.rules?.["scope-case-custom"]).toBeDefined();
+			expect(typeof p?.rules?.["scope-case-custom"]).toBe("function");
+		});
+
+		it("should export header-emoji rule in plugin", () => {
+			const p = config.plugins?.[0] as
+				| { rules?: Record<string, unknown> }
+				| undefined;
+			expect(p?.rules).toBeDefined();
+			expect(p?.rules?.["header-emoji"]).toBeDefined();
+			expect(typeof p?.rules?.["header-emoji"]).toBe("function");
 		});
 
 		it("should export scope-case-custom rule in plugin", () => {
@@ -159,7 +177,11 @@ describe("commitlint-config-core", () => {
 					const [, type, emoji, scope, subject] = match;
 					expect(type).toBe(expected.type);
 					expect(emoji).toBe(expected.emoji);
-					expect(scope ?? undefined).toBe(expected.scope);
+					if (expected.scope === undefined) {
+						expect(scope ?? undefined).toBeUndefined();
+					} else {
+						expect(scope ?? undefined).toEqual(expected.scope);
+					}
 					expect(subject).toEqual(expected.subject);
 				}
 			}

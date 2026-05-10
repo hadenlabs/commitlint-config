@@ -13,14 +13,18 @@ import {
 	subjectKeyRule,
 	validScopes,
 	validTypes,
+	type ParsedCommit,
 } from "./plugin";
 
-// Helper to cast rule to testable type
-type RuleLint<T extends object> = {
-	lint: (parsed: T) => [boolean, string];
-	description: string;
-	ex: () => string;
-};
+// Rule function type (commitlint plugin rule format)
+type PluginRule = (
+	parsed: ParsedCommit,
+	when: "always" | "never",
+) => [boolean, string?];
+
+// Helper to satisfy TypeScript: cast partial commit to ParsedCommit
+const toCommit = (partial: Partial<ParsedCommit>): ParsedCommit =>
+	partial as ParsedCommit;
 
 // Store original module reference for cache reset (used for cache reset patterns)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -143,11 +147,12 @@ describe("getResolvedConfig", () => {
 // subjectKeyRule tests by provider
 // ============================================================
 describe("subjectKeyRule", () => {
-	// Helper to get rule lint function
-	const lint = (subject: string | undefined) =>
-		(subjectKeyRule as unknown as RuleLint<{ subject?: string }>).lint({
-			subject,
-		});
+	// Helper to call rule directly as function
+	const lint = (subject: string | null | undefined) =>
+		(subjectKeyRule as PluginRule)(
+			{ subject: subject ?? null, header: "", raw: "" },
+			"always",
+		);
 
 	describe("with Jira provider", () => {
 		it("should pass commit with valid Jira key at start of subject", () => {
@@ -182,75 +187,42 @@ describe("subjectKeyRule", () => {
 		});
 
 		it("should fail when subject is missing", () => {
-			const [valid, message] = lint(undefined);
+			const [valid, message] = lint(null);
 			expect(valid).toBe(false);
 			expect(message).toContain("subject");
 		});
 	});
 
-	describe("with GitHub provider", () => {
-		// Note: We test the description/ex to verify provider context
-		// Since we can't easily switch providers in tests without mocking,
-		// we verify the rule's provider-aware behavior through exports
-
-		it("should have provider-aware description", () => {
-			const desc = (subjectKeyRule as unknown as { description: string })
-				.description;
-			// With Jira provider (current config), should show HAD pattern
-			expect(desc).toContain("HAD-");
+	describe("with GitHub/GitLab providers", () => {
+		// Note: Tests verify the function signature works correctly
+		// Provider-specific description is now handled internally
+		it("should be a function", () => {
+			expect(typeof subjectKeyRule).toBe("function");
 		});
 
-		it("should have example with correct provider format", () => {
-			const example = (subjectKeyRule as unknown as { ex: () => string }).ex();
-			// With Jira provider, should include HAD- pattern
-			expect(example).toContain("HAD-");
-		});
-	});
-
-	describe("with GitLab provider", () => {
-		it("should accept any subject format (no key-at-start requirement)", () => {
-			// This test verifies behavior for non-Jira providers
-			// We can't switch provider without mocking jasper.toml
-			// The test exists to document expected behavior
-			const [valid] = lint("any subject format");
-			// For GitHub/GitLab, subjectKeyRule always returns [true, ""]
-			// This test documents the expected behavior
-			expect(typeof valid).toBe("boolean");
-		});
-	});
-
-	describe("with Auto provider", () => {
-		it("should fail when provider is 'auto' (cannot validate)", () => {
-			// This test verifies auto provider behavior
-			// The rule should fail with configuration message
-			// Note: Current config has explicit provider="jira", so this
-			// test documents the expected auto behavior
-			const [valid] = lint("any subject");
-			// With explicit jira provider, should validate
-			// For auto, would fail with configuration message
+		it("should accept parsed commit and when parameter", () => {
+			const [valid] = subjectKeyRule(
+				toCommit({ subject: "any format", header: "", raw: "" }),
+				"always",
+			);
+			// With jira provider, should validate
 			expect(typeof valid).toBe("boolean");
 		});
 	});
 
 	describe("rule structure", () => {
-		it("should have lint function", () => {
-			expect(
-				typeof (subjectKeyRule as unknown as RuleLint<{ subject?: string }>)
-					.lint,
-			).toBe("function");
+		it("should be a function (commitlint plugin rule format)", () => {
+			expect(typeof subjectKeyRule).toBe("function");
 		});
 
-		it("should have description string", () => {
-			expect(
-				typeof (subjectKeyRule as unknown as { description: string })
-					.description,
-			).toBe("string");
-		});
-
-		it("should have ex function returning example string", () => {
-			const example = (subjectKeyRule as unknown as { ex: () => string }).ex();
-			expect(typeof example).toBe("string");
-			expect(example.length).toBeGreaterThan(0);
+		it("should return [boolean, string?] tuple", () => {
+			const result = subjectKeyRule(
+				toCommit({ subject: "test", header: "", raw: "" }),
+				"always",
+			);
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBeGreaterThanOrEqual(1);
+			expect(typeof result[0]).toBe("boolean");
 		});
 	});
 });
@@ -259,10 +231,12 @@ describe("subjectKeyRule", () => {
 // headerEmojiRule tests
 // ============================================================
 describe("headerEmojiRule", () => {
+	// Helper to call rule directly as function
 	const lint = (raw: string | undefined) =>
-		(headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint({
-			raw,
-		});
+		(headerEmojiRule as PluginRule)(
+			{ raw: raw ?? "", header: raw ?? "", subject: "" },
+			"always",
+		);
 
 	describe("valid cases", () => {
 		it("should pass commit with valid emoji", () => {
@@ -321,7 +295,7 @@ describe("headerEmojiRule", () => {
 		});
 
 		it("should fail commit with no header", () => {
-			const [valid, message] = lint(undefined);
+			const [valid, message] = lint("");
 			expect(valid).toBe(false);
 			expect(message).toContain("header");
 		});
@@ -338,23 +312,17 @@ describe("headerEmojiRule", () => {
 	});
 
 	describe("rule structure", () => {
-		it("should have lint function", () => {
-			expect(
-				typeof (headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint,
-			).toBe("function");
+		it("should be a function (commitlint plugin rule format)", () => {
+			expect(typeof headerEmojiRule).toBe("function");
 		});
 
-		it("should have description string", () => {
-			expect(
-				typeof (headerEmojiRule as unknown as { description: string })
-					.description,
-			).toBe("string");
-		});
-
-		it("should have ex function returning example string", () => {
-			const example = (headerEmojiRule as unknown as { ex: () => string }).ex();
-			expect(typeof example).toBe("string");
-			expect(example).toContain("✨");
+		it("should return [boolean, string?] tuple", () => {
+			const result = headerEmojiRule(
+				toCommit({ raw: "test", header: "test", subject: "" }),
+				"always",
+			);
+			expect(Array.isArray(result)).toBe(true);
+			expect(typeof result[0]).toBe("boolean");
 		});
 	});
 });
@@ -363,10 +331,17 @@ describe("headerEmojiRule", () => {
 // scopeCaseRule tests
 // ============================================================
 describe("scopeCaseRule", () => {
-	const lint = (scope: string | undefined) =>
-		(scopeCaseRule as unknown as RuleLint<{ scope?: string }>).lint({
-			scope,
-		});
+	// Helper to call rule directly as function
+	const lint = (scope: string | null | undefined) =>
+		(scopeCaseRule as PluginRule)(
+			{
+				scope: scope ?? null,
+				header: "",
+				raw: "",
+				subject: "",
+			},
+			"always",
+		);
 
 	describe("valid cases", () => {
 		it("should pass commit with lowercase scope", () => {
@@ -375,7 +350,7 @@ describe("scopeCaseRule", () => {
 		});
 
 		it("should pass commit with no scope", () => {
-			const [valid] = lint(undefined);
+			const [valid] = lint(null);
 			expect(valid).toBe(true);
 		});
 
@@ -412,22 +387,17 @@ describe("scopeCaseRule", () => {
 	});
 
 	describe("rule structure", () => {
-		it("should have lint function", () => {
-			expect(
-				typeof (scopeCaseRule as unknown as RuleLint<{ scope?: string }>).lint,
-			).toBe("function");
+		it("should be a function (commitlint plugin rule format)", () => {
+			expect(typeof scopeCaseRule).toBe("function");
 		});
 
-		it("should have description string", () => {
-			expect(
-				typeof (scopeCaseRule as unknown as { description: string })
-					.description,
-			).toBe("string");
-		});
-
-		it("should have ex function returning example string", () => {
-			const example = (scopeCaseRule as unknown as { ex: () => string }).ex();
-			expect(typeof example).toBe("string");
+		it("should return [boolean, string?] tuple", () => {
+			const result = scopeCaseRule(
+				toCommit({ scope: "test", header: "", raw: "", subject: "" }),
+				"always",
+			);
+			expect(Array.isArray(result)).toBe(true);
+			expect(typeof result[0]).toBe("boolean");
 		});
 	});
 });
@@ -442,35 +412,27 @@ describe("plugin", () => {
 		expect(plugin).toHaveProperty("rules");
 	});
 
-	it("should have subject-key rule", () => {
+	it("should have subject-key rule as function", () => {
 		expect(plugin.rules).toHaveProperty("subject-key");
-		const rule = plugin.rules["subject-key"];
-		expect(typeof rule).toBe("object");
-		expect(rule).toHaveProperty("lint");
+		expect(typeof plugin.rules["subject-key"]).toBe("function");
 	});
 
-	it("should have header-emoji rule", () => {
+	it("should have header-emoji rule as function", () => {
 		expect(plugin.rules).toHaveProperty("header-emoji");
-		const rule = plugin.rules["header-emoji"];
-		expect(typeof rule).toBe("object");
-		expect(rule).toHaveProperty("lint");
+		expect(typeof plugin.rules["header-emoji"]).toBe("function");
 	});
 
-	it("should have scope-case-custom rule", () => {
+	it("should have scope-case-custom rule as function", () => {
 		expect(plugin.rules).toHaveProperty("scope-case-custom");
-		const rule = plugin.rules["scope-case-custom"];
-		expect(typeof rule).toBe("object");
-		expect(rule).toHaveProperty("lint");
+		expect(typeof plugin.rules["scope-case-custom"]).toBe("function");
 	});
 
-	it("should have all three rules with lint, description, ex", () => {
+	it("should have all three rules as functions (commitlint plugin format)", () => {
 		const rules = ["subject-key", "header-emoji", "scope-case-custom"] as const;
 
 		for (const ruleName of rules) {
 			const rule = plugin.rules[ruleName];
-			expect(typeof rule.lint).toBe("function");
-			expect(typeof rule.description).toBe("string");
-			expect(typeof rule.ex).toBe("function");
+			expect(typeof rule).toBe("function");
 		}
 	});
 });
@@ -531,17 +493,13 @@ describe("Jira projectKey error behavior", () => {
 	});
 
 	describe("subjectKeyRule without projectKey", () => {
-		it("should fail with message when Jira configured but projectKey missing", () => {
-			// The subjectKeyRule catches getJiraKeyPattern errors
-			// and returns appropriate failure message
-			const [valid, message] = (
-				subjectKeyRule as unknown as RuleLint<{
-					subject?: string;
-				}>
-			).lint({ subject: "HAD-123 test" });
+		it("should return appropriate result when Jira configured but projectKey missing", () => {
+			const [valid, message] = subjectKeyRule(
+				toCommit({ subject: "HAD-123 test", header: "", raw: "" }),
+				"always",
+			);
 
-			// With proper config, should pass
-			// Without projectKey, error message should mention jasper.toml
+			// With proper config, should pass or fail based on validation
 			expect(typeof valid).toBe("boolean");
 			expect(typeof message).toBe("string");
 		});
@@ -555,29 +513,38 @@ describe("parseHeader internal behavior", () => {
 	// These test the parsing logic through the headerEmojiRule
 
 	it("should extract type, emoji, scope, subject from valid header", () => {
-		const [valid] = (
-			headerEmojiRule as unknown as RuleLint<{ raw?: string }>
-		).lint({
-			raw: "feat ✨ (accounts): HAD-123 add feature",
-		});
+		const [valid] = headerEmojiRule(
+			toCommit({
+				raw: "feat ✨ (accounts): HAD-123 add feature",
+				header: "feat ✨ (accounts): HAD-123 add feature",
+				subject: "",
+			}),
+			"always",
+		);
 		expect(valid).toBe(true);
 	});
 
 	it("should parse header without scope", () => {
-		const [valid] = (
-			headerEmojiRule as unknown as RuleLint<{ raw?: string }>
-		).lint({
-			raw: "fix 🐛: HAD-456 resolve bug",
-		});
+		const [valid] = headerEmojiRule(
+			toCommit({
+				raw: "fix 🐛: HAD-456 resolve bug",
+				header: "fix 🐛: HAD-456 resolve bug",
+				subject: "",
+			}),
+			"always",
+		);
 		expect(valid).toBe(true);
 	});
 
 	it("should fail on malformed header format", () => {
-		const [valid] = (
-			headerEmojiRule as unknown as RuleLint<{ raw?: string }>
-		).lint({
-			raw: "malformed header without proper format",
-		});
+		const [valid] = headerEmojiRule(
+			toCommit({
+				raw: "malformed header without proper format",
+				header: "malformed header without proper format",
+				subject: "",
+			}),
+			"always",
+		);
 		expect(valid).toBe(false);
 	});
 });
