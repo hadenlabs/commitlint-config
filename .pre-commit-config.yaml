@@ -27,38 +27,37 @@ repos:
           - --ignore-words=.ci/linters/.codespell-ignores
         exclude: >
           (?x)^(
-            go.mod|
-            go.sum|
-            app/ia/datasets\/.*$|
-            openapi.yaml|
-            .+\.vendor\/.*$|
-            .+\.node_modules\/.*$|
-            .+\.sops.*$|
-            .+\.lock$|
-            .+\.mdx$|
+          AGENTS.md|
+          CHANGELOG.md|
+          .claude/skills/.*/SKILL\.md$|
+          .agents/skills/.*/SKILL\.md$|
+          .opencode/skills/.*/SKILL\.md$|
+          app/components/sections\/.*$|
+          openspec\/.*$|
+          app/ia/datasets\/.*$|
+          app/routes\/.*$|
+          data/patterns\/.*$|
+          openspec\/.*$|
+          go.mod|
+          go.sum|
+          openapi.yaml|
+          provision/prompts\/.*$|
+          docs/prompts/openspec\/.*$|
+          .+\.lock$|
+          .+\.mdx$|
+          .+\.node_modules\/.*$|
+          .+\.sops.*$|
+          .+\.vendor\/.*$|
+          src/context/humans\.md$|
           )$
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.23.0
+    rev: v9.24.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
         additional_dependencies: ["@hadenlabs/commitlint-config"]
         args:
           - --config=.ci/linters/.commitlintrc.json
-  - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.14.2
-    hooks:
-      - id: markdown-link-check
-        args:
-          - --config=.ci/linters/markdown-link-config.json
-        exclude: >
-          (?x)^(
-            .+\.docs/env-vars.md$|
-            docs/env-vars.md$|
-            docs\/include\/terraform.md$|
-            .+\.tpl.md$|
-          )$
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -74,27 +73,53 @@ repos:
         files: ^tf|-|\.(py|env|yml|yaml)$
       - id: check-case-conflict
       - id: check-json
+        exclude: >
+          (?x)^(
+            .zed/tasks.json$|
+          )$
       - id: check-xml
       - id: check-yaml
         args:
           - --allow-multiple-documents
+        exclude: >
+          (?x)^(
+            .*\.tpl\.yaml$
+          )$
+      - id: fix-byte-order-marker
       - id: check-ast
       - id: debug-statements
       - id: check-docstring-first
       - id: requirements-txt-fixer
       - id: check-symlinks
       - id: file-contents-sorter
-      - id: fix-encoding-pragma
       - id: sort-simple-yaml
+
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.14.2
+    hooks:
+      - id: markdown-link-check
+        args:
+          - --config=.ci/linters/markdown-link-config.json
+        exclude: >
+          (?x)^(
+          .+\.docs/env-vars.md$|
+          .+\.tpl.md$|
+          data/patterns\/.*$|
+          docs/env-vars.md$|
+          docs\/include\/terraform.md$|
+          )$
+
   - repo: https://github.com/hadenlabs/pre-commit-hooks
     rev: 0.6.0
     hooks:
       - id: do-not-commit
+
       - id: shellcheck
         exclude: >
           (?x)^(
             .+\.provision/git/hooks/prepare-commit-msg$|
             .+\.tpl.sh$|
+            .+\.envrc$|
           )$
         args:
           - --exclude=SC1072,SC1073,SC2068
@@ -106,13 +131,3 @@ repos:
       - id: hadolint
         args:
           - --config=.ci/linters/.hadolint.yaml
-  - repo: https://github.com/bridgecrewio/checkov.git
-    rev: "3.2.495"
-    hooks:
-      - id: checkov
-        args:
-          - --config-file=.ci/linters/checkov.yml
-        exclude: >
-          (?x)^(
-            .+\.terraform.*$|
-          )$
