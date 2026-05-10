@@ -19,7 +19,7 @@ tasks:
     desc: Generate next tag changelog
     run: once
     cmds:
-      - git-chglog --config packages/commitlint-config-core --next-tag $({{.PYTHON_PACKAGE_MANAGER}} run bump-my-version show current_version --config-file packages/commitlint-config-core/bump-docs.toml) --output packages/commitlint-config-core/CHANGELOG.md
+      - git-chglog --config packages/commitlint-config-core/.chglog/config.yml --next-tag $(uvx run bump-my-version show current_version --config-file packages/commitlint-config-core/bump-docs.toml) --output packages/commitlint-config-core/CHANGELOG.md
 
   version:default:
     desc: "Show current release version"
