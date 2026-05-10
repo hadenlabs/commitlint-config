@@ -1,4 +1,4 @@
-# How to use this project
+# How to Use This Project
 
 Create file `.commitlintrc.json` with extending preset and define set of scopes:
 

@@ -1,3 +1,6 @@
+
+
+
 <!--
 
 
@@ -12,13 +15,30 @@
 
   -->
 
-[![Latest Release](https://img.shields.io/github/release/hadenlabs/commitlint-config)](https://github.com/hadenlabs/commitlint-config/releases) [![Lint](https://img.shields.io/github/workflow/status/hadenlabs/commitlint-config/lint-code)](https://github.com/hadenlabs/commitlint-config/actions?workflow=lint-code) [![CI](https://img.shields.io/github/workflow/status/hadenlabs/commitlint-config/ci)](https://github.com/hadenlabs/commitlint-config/actions?workflow=ci) [![Test](https://img.shields.io/github/workflow/status/hadenlabs/commitlint-config/test)](https://github.com/hadenlabs/commitlint-config/actions?workflow=test) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow)](https://conventionalcommits.org) [![KeepAChangelog](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.0.0-orange)](https://keepachangelog.com)
+
+ [![pipeline status](https://github.com/hadenlabs/commitlint-config/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/hadenlabs/commitlint-config/commits/main) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow)](https://conventionalcommits.org) [![KeepAChangelog](https://img.shields.io/badge/changelog-Keep%20a%20Changelog%20v1.0.0-orange)](https://keepachangelog.com)
 
 # commitlint-config
 
-commitlint-config for project
+
+
+
+commitlint-config for project 
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Requirements
+
 
 This is a list of plugins that need to be installed previously to enjoy all the goodies of this configuration:
 
@@ -26,27 +46,13 @@ This is a list of plugins that need to be installed previously to enjoy all the 
 - [python](https://www.python.org)
 - [taskfile](https://github.com/go-task/task)
 
-## Installation
 
-### [yarn](https://yarnpkg.com)
 
-If you're using [yarn](https://yarnpkg.com)
 
-```shell
-  yarn add --dev husky @commitlint/cli @commitlint/config-conventional @hadenlabs/commitlint-config
-```
-
-### [npm](https://www.npmjs.com)
-
-If you're using [npm](https://www.npmjs.com)
-
-```shell
-  npm i --save-dev husky @commitlint/cli @commitlint/config-conventional @hadenlabs/commitlint-config
-```
 
 ## Usage
 
-# How to use this project
+# How to Use This Project
 
 Create file `.commitlintrc.json` with extending preset and define set of scopes:
 
@@ -79,22 +85,24 @@ Add to `package.json` next section:
 }
 ```
 
-## Examples
 
-<!-- Space: Projects -->
-<!-- Parent: CommitlintConfig -->
-<!-- Title: Examples CommitlintConfig -->
-<!-- Label: Examples -->
-<!-- Include: ./../disclaimer.md -->
-<!-- Include: ac:toc -->
 
-### Common
+
+
+
+
+
+
+
+
 
 ## Help
 
-**Got a question?**
+### Got a question?
+
 
 File a GitHub [issue](https://github.com/hadenlabs/commitlint-config/issues).
+
 
 ## Contributing
 
@@ -112,21 +120,36 @@ Using the given version number of `MAJOR.MINOR.PATCH`, we apply the following co
 
 ### Backwards compatibility in `0.0.z` and `0.y.z` version
 
-- In the context of initial development, backwards compatibility in versions `0.0.z` is **not guaranteed** when `z` is increased. (Initial development)
-- In the context of pre-release, backwards compatibility in versions `0.y.z` is **not guaranteed** when `y` is increased. (Pre-release)
+- In the context of initial development, backwards compatibility in versions `0.0.z` is **not guaranteed** when `z` is
+  increased. (Initial development)
+- In the context of pre-release, backwards compatibility in versions `0.y.z` is **not guaranteed** when `y` is
+  increased. (Pre-release)
+
+
+
 
 ## Copyright
 
-Copyright © 2018-2025 [Hadenlabs](https://hadenlabs.com)
+Copyright © 2018-2026 [Hadenlabs](https://hadenlabs.com)
+
+
 
 ## Trademarks
 
 All other trademarks referenced herein are the property of their respective owners.
 
+
+
+
+
+
 ## License
 
 The code and styles are licensed under the LGPL-3.0 license [See project license.](LICENSE).
 
+
+
 ## Don't forget to 🌟 Star 🌟 the repo if you like commitlint-config
+
 
 [Your feedback is appreciated](https://github.com/hadenlabs/commitlint-config/issues)
