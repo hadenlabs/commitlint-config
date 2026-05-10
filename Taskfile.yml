@@ -2,18 +2,26 @@
 version: "3"
 
 includes:
-  ansible:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/ansible/Taskfile.yml"
   pre-commit:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/pre-commit/Taskfile.yml"
-  github:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/github/Taskfile.yml"
   changelog:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/changelog/Taskfile.yml"
   confluence:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/confluence/Taskfile.yml"
+  node:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/node/Taskfile.yml"
   python:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/python/Taskfile.yml"
+  uv:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/uv/Taskfile.yml"
+  pnpm:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/pnpm/Taskfile.yml"
+  go:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/go/Taskfile.yml"
+  gradle:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/gradle/Taskfile.yml"
+  coursier:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/coursier/Taskfile.yml"
   git:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/git/Taskfile.yml"
   docs:
@@ -22,34 +30,40 @@ includes:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/docker/Taskfile.yml"
   version:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/version/Taskfile.yml"
-  yarn:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/yarn/Taskfile.yml"
-  uv:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/uv/Taskfile.yml"
-  pnpm:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/pnpm/Taskfile.yml"
+  release:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/release/Taskfile.yml"
+  opencode:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/opencode/Taskfile.yml"
+  biome:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/biomejs/Taskfile.yml"
+  bun:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/bun/Taskfile.yml"
+  skills:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/skills/Taskfile.yml"
   plantuml:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/plantuml/Taskfile.yml"
-  packer:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/packer/Taskfile.yml"
   prettier:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/prettier/Taskfile.yml"
   sonar:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/sonar/Taskfile.yml"
-  sops:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/sops/Taskfile.yml"
   keybase:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/keybase/Taskfile.yml"
   multipass:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/multipass/Taskfile.yml"
+  ssh:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/ssh/Taskfile.yml"
+  openssl:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/openssl/Taskfile.yml"
   terraform:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/terraform/Taskfile.yml"
   terragrunt:
     taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/terragrunt/Taskfile.yml"
-  openssl:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/openssl/Taskfile.yml"
-  ssh:
-    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/ssh/Taskfile.yml"
+  ansible:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/ansible/Taskfile.yml"
+  lua:
+    taskfile: "https://raw.githubusercontent.com/hadenlabs/tasks/refs/heads/main/src/lua/Taskfile.yml"
+
+  core: ./packages/commitlint-config-core/Taskfile.yml
 
 env:
   DOCKER:
@@ -62,11 +76,13 @@ env:
     sh: node --version 2> /dev/null || echo "not exist"
   APP_TAG:
     sh: git describe --tags $(git rev-list --tags --max-count=1) 2> /dev/null || echo "0.0.0"
-  PYTHON_PACKAGE_MANAGER: uv
   README_YAML: provision/generators/README.yaml
   README_TEMPLATE: provision/templates/README.tpl.md
   README_INCLUDES: file://
-  TERRAFORM_PATH: provision/terraform
+  TERRAFORM_PATH: ./
+  PYTHON_PACKAGE_MANAGER: uv
+  SKILL_REPOS:
+    https://github.com/hadenlabs/jasper
 
 dotenv:
   - .env
@@ -75,24 +91,55 @@ vars:
   PROJECT_NAME: commitlint-config
   ORGANIZATION: hadenlabs
   DOCKER_PLATFORM: linux/amd64
-  USER: ubuntu
   REVIEWERS: luismayta
   PYTHON_VERSION: 3.11.5
   NODE_VERSION: v24.11.1
-  GIT_IGNORES: python,node,go,zsh,sonar,terraform,linux
+  GRADLE_VERSION: 8.4.0
+  GOLANG_VERSION: 1.24.11
+  GIT_IGNORES: python,node,go,zsh,sonar,java,maven,intellij+all,terraform,linux
+  COMMIT: $(git rev-parse HEAD)
+  RELEASE_DIR: ./release
+  DATE: $(date +%s)
   GOLANGCI_VERSION: 1.42.0
   TERRAFORM_VERSION: 1.11.4
   README_FILE: README.md
+  # NOTE: Agent workflow conventions live in `jasper.toml`.
   GIT_IGNORES_CUSTOM: |
     bin
+    .project
     .scannerwork
     .secrets
+    public
     TMP_CHANGELOG.md
     .task
     .terraform.lock.hcl
+    build
+    .task
+    .terraform.lock.hcl
+    *.lock
     *.lock.hcl
+    .cq/
     *.zip
+    package-lock.json
+    provision/ansible/*/roles/contrib
     .external_modules
+    vendor
+    charts
+    .DS_Store
+    .turbo
+    .jira-config.json
+  AI_IGNORE_CUSTOM: |
+    # Block specific paths
+    /secrets/**
+    /private/**
+    !/private/public-config.json
+
+    # Block directories anywhere
+    **/node_modules/**
+    **/dist/**
+    **/build/**
+    **/.cache/**
+    build
 
 tasks:
   default:
@@ -119,9 +166,13 @@ tasks:
     desc: "Check all dependencies"
     deps:
       - uv:check
+      - pnpm:check
       - changelog:check
       - git:check
       - docs:check
+      - opencode:check
+      - bun:check
+      - skills:check
 
   readme:
     desc: Generate Readme
@@ -132,12 +183,14 @@ tasks:
         --out {{.README_FILE}}
         --datasource config={{.README_YAML}}
         --datasource includes={{.README_INCLUDES}}
-      - task: prettier
+      - task: core:readme
+      - task: format
 
-  prettier:
-    desc: Execute prettier files
+  format:
+    desc: Execute format files
     cmds:
-      - task: prettier:all
+      - task: uv:fmt
+      - task: biome:fmt
 
   upgrade:
     desc: Execute upgrade packages
@@ -151,19 +204,47 @@ tasks:
     cmds:
       - >-
         [ -e ".env" ] || cp -rf .env.example .env
-      - task: pnpm:setup
       - task: uv:setup
-      - task: uv:precommit
-      - task: git:setup
-
-  test:
-    run: once
-    desc: Execute task test all
-    cmds:
-      - task: go:test
+      - task: bun:setup
+      - bun install
+      - task: skills:setup
 
   environment:
     desc: Setup environment of project
     cmds:
       - task: uv:environment
       - task: pnpm:environment
+      - task: pre-commit:setup
+      - task: git:setup
+      - task: bun:setup
+
+  validate:
+    desc: "Run validate on all files"
+    cmds:
+      - task: pre-commit:lint
+      - bun run typecheck
+      - bun run lint
+      - bun run test
+
+  build:
+    desc: "Run build on all packages"
+    cmds:
+      - bun run build
+
+  fix:
+    desc: "Run fix on all files"
+    cmds:
+      - bun run fix
+
+  test:
+    desc: "Run all tests"
+    cmds:
+      - bun run test
+
+  help:
+    cmds:
+      - cmd: |
+          echo 'Use "task --list" to get a list of all available tasks with a short description of what they do.'
+          echo 'There are some more tasks used as dependencies for other tasks.'
+          echo 'You can view them with "task --list-all".'
+        silent: true

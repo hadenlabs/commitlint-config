@@ -4,7 +4,7 @@ Contributions to commitlint-config-core are welcome.
 
 Feel free to use all of the contribution options:
 
-- Contribute to commitlint-config-core repositories on [GitHub](https://github.com/hadenlabs/commitlint-config-core). See [Github Flow](/docs/contribute/github-flow.md).
+- Contribute to commitlint-config-core repositories on [GitHub](https://github.com/hadenlabs/commitlint-config). See [Github Flow](/docs/contribute/github-flow.md).
 
 ## Getting Started
 
@@ -62,15 +62,15 @@ See [Testing](./testing.md).
 
 ### Code Submission
 
-1. See if a [Pull Request](https://github.com/hadenlabs/commitlint-config-core/pulls) exists
+1. See if a [Pull Request](https://github.com/hadenlabs/commitlint-config/pulls) exists
    - Add some comments or review the code to help it along
    - Don\'t be afraid to comment when logic needs clarification
-2. Create a Fork and open a [Pull Request](https://github.com/hadenlabs/commitlint-config-core/pulls) if needed
+2. Create a Fork and open a [Pull Request](https://github.com/hadenlabs/commitlint-config/pulls) if needed
 
 ### Code Review
 
 - Anyone can review code
-- Any [Pull Request](https://github.com/hadenlabs/commitlint-config-core/pulls) should be closed or merged within a week
+- Any [Pull Request](https://github.com/hadenlabs/commitlint-config/pulls) should be closed or merged within a week
 
 ### Code Acceptance
 

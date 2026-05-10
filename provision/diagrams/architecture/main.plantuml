@@ -1,0 +1,7 @@
+@startuml
+skinparam roundCorner 15
+left to right direction
+
+file commitlintrc.json as commitlint
+
+@enduml

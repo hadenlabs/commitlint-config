@@ -17,22 +17,14 @@ email:
 license: "LGPL-3.0"
 
 # Canonical GitHub repo
+github_host: github.com
 github_repo: hadenlabs/commitlint-config
 
 # Badges to display
 badges:
-  - name: Latest Release
-    image: https://img.shields.io/github/release/hadenlabs/commitlint-config
-    url: https://github.com/hadenlabs/commitlint-config/releases
-  - name: Lint
-    image: https://img.shields.io/github/workflow/status/hadenlabs/commitlint-config/lint-code
-    url: https://github.com/hadenlabs/commitlint-config/actions?workflow=lint-code
-  - name: CI
-    image: https://img.shields.io/github/workflow/status/hadenlabs/commitlint-config/ci
-    url: https://github.com/hadenlabs/commitlint-config/actions?workflow=ci
-  - name: Test
-    image: https://img.shields.io/github/workflow/status/hadenlabs/commitlint-config/test
-    url: https://github.com/hadenlabs/commitlint-config/actions?workflow=test
+  - name: pipeline status
+    image: https://github.com/hadenlabs/commitlint-config/actions/workflows/lint.yml/badge.svg?branch=main
+    url: https://github.com/hadenlabs/commitlint-config/commits/main
   - name: pre-commit
     image: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
     url: https://github.com/pre-commit/pre-commit
@@ -58,10 +50,3 @@ description: |-
 
 usages:
   - docs/usage.md
-
-installation:
-  - "docs/include/installation/yarn.md"
-  - "docs/include/installation/npm.md"
-
-examples:
-  - "docs/examples/common.md"
