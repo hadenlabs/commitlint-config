@@ -22,12 +22,22 @@ message = "Bump version: {current_version} → {new_version}"
 commit_args = ""
 
 [[tool.bumpversion.files]]
-filename = "packages/commitlint-config-core/docs/installation/antigravity.md"
+filename = "packages/commitlint-config-core/docs/installation/npm.md"
 search = '@hadenlabs/commitlint-config-core@{current_version}'
 replace = '@hadenlabs/commitlint-config-core@{new_version}'
 
 [[tool.bumpversion.files]]
-filename = "packages/commitlint-config-core/docs/installation/opencode.md"
+filename = "packages/commitlint-config-core/docs/installation/pnpm.md"
+search = '@hadenlabs/commitlint-config-core@{current_version}'
+replace = '@hadenlabs/commitlint-config-core@{new_version}'
+
+[[tool.bumpversion.files]]
+filename = "packages/commitlint-config-core/docs/installation/bun.md"
+search = '@hadenlabs/commitlint-config-core@{current_version}'
+replace = '@hadenlabs/commitlint-config-core@{new_version}'
+
+[[tool.bumpversion.files]]
+filename = "packages/commitlint-config-core/docs/installation/yarn.md"
 search = '@hadenlabs/commitlint-config-core@{current_version}'
 replace = '@hadenlabs/commitlint-config-core@{new_version}'
 

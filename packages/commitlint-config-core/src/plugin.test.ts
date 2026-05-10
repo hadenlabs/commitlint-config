@@ -16,7 +16,7 @@ import {
 } from "./plugin";
 
 // Helper to cast rule to testable type
-	type RuleLint<T extends object> = {
+type RuleLint<T extends object> = {
 	lint: (parsed: T) => [boolean, string];
 	description: string;
 	ex: () => string;
@@ -234,14 +234,17 @@ describe("subjectKeyRule", () => {
 
 	describe("rule structure", () => {
 		it("should have lint function", () => {
-			expect(typeof (subjectKeyRule as unknown as RuleLint<{ subject?: string }>).lint).toBe(
-				"function",
-			);
+			expect(
+				typeof (subjectKeyRule as unknown as RuleLint<{ subject?: string }>)
+					.lint,
+			).toBe("function");
 		});
 
 		it("should have description string", () => {
-			expect(typeof (subjectKeyRule as unknown as { description: string })
-				.description).toBe("string");
+			expect(
+				typeof (subjectKeyRule as unknown as { description: string })
+					.description,
+			).toBe("string");
 		});
 
 		it("should have ex function returning example string", () => {
@@ -336,14 +339,16 @@ describe("headerEmojiRule", () => {
 
 	describe("rule structure", () => {
 		it("should have lint function", () => {
-			expect(typeof (headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint).toBe(
-				"function",
-			);
+			expect(
+				typeof (headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint,
+			).toBe("function");
 		});
 
 		it("should have description string", () => {
-			expect(typeof (headerEmojiRule as unknown as { description: string })
-				.description).toBe("string");
+			expect(
+				typeof (headerEmojiRule as unknown as { description: string })
+					.description,
+			).toBe("string");
 		});
 
 		it("should have ex function returning example string", () => {
@@ -408,14 +413,16 @@ describe("scopeCaseRule", () => {
 
 	describe("rule structure", () => {
 		it("should have lint function", () => {
-			expect(typeof (scopeCaseRule as unknown as RuleLint<{ scope?: string }>).lint).toBe(
-				"function",
-			);
+			expect(
+				typeof (scopeCaseRule as unknown as RuleLint<{ scope?: string }>).lint,
+			).toBe("function");
 		});
 
 		it("should have description string", () => {
-			expect(typeof (scopeCaseRule as unknown as { description: string })
-				.description).toBe("string");
+			expect(
+				typeof (scopeCaseRule as unknown as { description: string })
+					.description,
+			).toBe("string");
 		});
 
 		it("should have ex function returning example string", () => {
@@ -457,11 +464,7 @@ describe("plugin", () => {
 	});
 
 	it("should have all three rules with lint, description, ex", () => {
-		const rules = [
-			"subject-key",
-			"header-emoji",
-			"scope-case-custom",
-		] as const;
+		const rules = ["subject-key", "header-emoji", "scope-case-custom"] as const;
 
 		for (const ruleName of rules) {
 			const rule = plugin.rules[ruleName];
@@ -531,9 +534,11 @@ describe("Jira projectKey error behavior", () => {
 		it("should fail with message when Jira configured but projectKey missing", () => {
 			// The subjectKeyRule catches getJiraKeyPattern errors
 			// and returns appropriate failure message
-			const [valid, message] = (subjectKeyRule as unknown as RuleLint<{
-				subject?: string;
-			}>).lint({ subject: "HAD-123 test" });
+			const [valid, message] = (
+				subjectKeyRule as unknown as RuleLint<{
+					subject?: string;
+				}>
+			).lint({ subject: "HAD-123 test" });
 
 			// With proper config, should pass
 			// Without projectKey, error message should mention jasper.toml
@@ -550,21 +555,27 @@ describe("parseHeader internal behavior", () => {
 	// These test the parsing logic through the headerEmojiRule
 
 	it("should extract type, emoji, scope, subject from valid header", () => {
-		const [valid] = (headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint({
+		const [valid] = (
+			headerEmojiRule as unknown as RuleLint<{ raw?: string }>
+		).lint({
 			raw: "feat ✨ (accounts): HAD-123 add feature",
 		});
 		expect(valid).toBe(true);
 	});
 
 	it("should parse header without scope", () => {
-		const [valid] = (headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint({
+		const [valid] = (
+			headerEmojiRule as unknown as RuleLint<{ raw?: string }>
+		).lint({
 			raw: "fix 🐛: HAD-456 resolve bug",
 		});
 		expect(valid).toBe(true);
 	});
 
 	it("should fail on malformed header format", () => {
-		const [valid] = (headerEmojiRule as unknown as RuleLint<{ raw?: string }>).lint({
+		const [valid] = (
+			headerEmojiRule as unknown as RuleLint<{ raw?: string }>
+		).lint({
 			raw: "malformed header without proper format",
 		});
 		expect(valid).toBe(false);

@@ -14,13 +14,27 @@ tasks:
           --datasource config=packages/commitlint-config-core/provision/generators/README.yaml \
           --datasource repo=.
 
+  _changelog:next:
+    internal: true
+    desc: Generate next tag changelog
+    run: once
+    cmds:
+      - git-chglog --config packages/commitlint-config-core --next-tag $({{.PYTHON_PACKAGE_MANAGER}} run bump-my-version show current_version --config-file packages/commitlint-config-core/bump-docs.toml) --output packages/commitlint-config-core/CHANGELOG.md
+
+  version:default:
+    desc: "Show current release version"
+    silent: true
+    cmds:
+      - >-
+        {{.PYTHON_PACKAGE_MANAGER}} run bump-my-version show current_version --config-file packages/commitlint-config-core/bump-docs.toml
+
   version:major:
     run: once
     desc: version major
     silent: true
     cmds:
       - >-
-        uvx bump-my-version bump major --config-file packages/commitlint-config-core/bump-docs.toml
+        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump major --no-commit --config-file packages/commitlint-config-core/bump-docs.toml
 
   version:minor:
     run: once
@@ -28,7 +42,7 @@ tasks:
     silent: true
     cmds:
       - >-
-        uvx bump-my-version bump minor --config-file packages/commitlint-config-core/bump-docs.toml
+        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump minor --no-commit --config-file packages/commitlint-config-core/bump-docs.toml
 
   version:patch:
     run: once
@@ -36,7 +50,38 @@ tasks:
     silent: true
     cmds:
       - >-
-        uvx bump-my-version bump patch --config-file packages/commitlint-config-core/bump-docs.toml
+        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump patch -no-commit --config-file packages/commitlint-config-core/bump-docs.toml
+
+  version:pre_release:
+    run: once
+    desc: "Increase pre_release version"
+    cmds:
+      - >-
+        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump pre_release -no-commit --config-file packages/commitlint-config-core/bump-docs.toml
+
+  release:major:
+    desc: Release major (version bump + next changelog)
+    cmds:
+      - task: version:major
+      - task: _changelog_next
+
+  release:minor:
+    desc: Release minor (version bump + next changelog)
+    cmds:
+      - task: version:minor
+      - task: _changelog_next
+
+  release:patch:
+    desc: Release patch (version bump + next changelog)
+    cmds:
+      - task: version:patch
+      - task: _changelog_next
+
+  release:pre_release:
+    desc: Release pre-release (version bump + next changelog)
+    cmds:
+      - task: version:pre_release
+      - task: _changelog_next
 
   build:
     run: once

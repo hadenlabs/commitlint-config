@@ -338,7 +338,7 @@ export function loadGojiConfig(): { scopes: string[]; types: ValidType[] } {
 					console.warn(
 						"[DEPRECATION WARNING] .goji.json is deprecated and will be removed in a future version.\n" +
 							"  Please migrate scopes to jasper.toml: [commit] section.\n" +
-							"  Example: scopes = [\"core\", \"accounts\", \"ci\", \"skills\"]",
+							'  Example: scopes = ["core", "accounts", "ci", "skills"]',
 					);
 				}
 
