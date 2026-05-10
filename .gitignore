@@ -578,4 +578,8 @@ charts
 .DS_Store
 .turbo
 .jira-config.json
+.envrc
+.claude/
+.jira/
+.opencode/
 
