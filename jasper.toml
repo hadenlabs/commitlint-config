@@ -50,6 +50,10 @@ style = "jira"
 signoff = true
 subjectMaxLength = 100
 
+# Scopes for commitlint scope-enum rule
+# These are used by commitlint-config-core package
+scopes = ["core", "accounts", "ci", "skills"]
+
 [commit.providers.github]
 issueRegex = "\\(#[0-9]+\\)$"
 closingBodyLine = "Fixes #<number>"

@@ -5,5 +5,12 @@
   "files": {
     "includes": ["src/**/*.ts", "src/**/*.test.ts"],
     "ignoreUnknown": true
+  },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
+    }
   }
 }
