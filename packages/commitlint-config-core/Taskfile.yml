@@ -63,25 +63,25 @@ tasks:
     desc: Release major (version bump + next changelog)
     cmds:
       - task: version:major
-      - task: _changelog_next
+      - task: _changelog:next
 
   release:minor:
     desc: Release minor (version bump + next changelog)
     cmds:
       - task: version:minor
-      - task: _changelog_next
+      - task: _changelog:next
 
   release:patch:
     desc: Release patch (version bump + next changelog)
     cmds:
       - task: version:patch
-      - task: _changelog_next
+      - task: _changelog:next
 
   release:pre_release:
     desc: Release pre-release (version bump + next changelog)
     cmds:
       - task: version:pre_release
-      - task: _changelog_next
+      - task: _changelog:next
 
   build:
     run: once
