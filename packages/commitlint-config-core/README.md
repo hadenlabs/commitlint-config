@@ -94,7 +94,7 @@ echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
 ## Yarn
 
 ```bash
-yarn add @hadenlabs/commitlint-config-core@2.0.0
+yarn add @hadenlabs/commitlint-config-core@2.1.0
 ```# @hadenlabs/commitlint-config-core
 
 Shared types, utilities and config integrations for commitlint-config-core.
@@ -140,7 +140,7 @@ echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
 ## npm
 
 ```bash
-npm install @hadenlabs/commitlint-config-core@2.0.0
+npm install @hadenlabs/commitlint-config-core@2.1.0
 ```
 # @hadenlabs/commitlint-config-core
 
@@ -187,7 +187,7 @@ echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
 ## pnpm
 
 ```bash
-pnpm add @hadenlabs/commitlint-config-core@2.0.0
+pnpm add @hadenlabs/commitlint-config-core@2.1.0
 ```# @hadenlabs/commitlint-config-core
 
 Shared types, utilities and config integrations for commitlint-config-core.
@@ -233,7 +233,7 @@ echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
 ## Bun
 
 ```bash
-bun add @hadenlabs/commitlint-config-core@2.0.0
+bun add @hadenlabs/commitlint-config-core@2.1.0
 ```
 
 

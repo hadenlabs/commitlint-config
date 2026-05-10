@@ -1,6 +1,16 @@
 # Changelog
 
 All notable changes to this project will be documented in this file. This file uses change log convention from [keep a CHANGELOG](http://keepachangelog.com/en/0.3.0/).
+<a name="2.1.0"></a>
+## [2.1.0](https://github.com/hadenlabs/commitlint-config/compare/2.0.0...2.1.0)
+
+> 2026-05-10
+
+### 🎨 Code Refactoring
+
+* [HAD-68](https://hadenlabs.atlassian.net/browse/HAD-68) upgrade to commitlint v20 and refactor custom rule implementation
+
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/hadenlabs/commitlint-config/compare/1.2.0...2.0.0)
 

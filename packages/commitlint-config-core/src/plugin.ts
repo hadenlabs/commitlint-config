@@ -15,7 +15,8 @@ interface ParsedCommit {
 }
 
 // Rule function type matching commitlint's PluginRule format
-type PluginRule = Rule<ParsedCommit> & ((parsed: ParsedCommit, when?: RuleConfigCondition) => [boolean, string?]);
+type PluginRule = Rule<ParsedCommit> &
+	((parsed: ParsedCommit, when?: RuleConfigCondition) => [boolean, string?]);
 import {
 	buildResolvedConfig,
 	loadGojiConfig,
