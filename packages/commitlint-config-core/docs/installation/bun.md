@@ -43,5 +43,5 @@ echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
 ## Bun
 
 ```bash
-bun add @hadenlabs/commitlint-config-core@2.1.0
+bun add @hadenlabs/commitlint-config-core@2.2.0
 ```

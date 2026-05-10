@@ -223,9 +223,7 @@ describe("commitlint-config-core flat config", () => {
 		});
 
 		it("should have type-empty rule", () => {
-			const rule = config.rules?.["type-empty"] as
-				| [number, string]
-				| undefined;
+			const rule = config.rules?.["type-empty"] as [number, string] | undefined;
 			expect(rule).toBeDefined();
 			expect(rule?.[0]).toBe(2);
 			expect(rule?.[1]).toBe("never");
