@@ -1,6 +1,6 @@
 {
   "name": "@hadenlabs/commitlint-config-core",
-  "version": "0.0.0",
+  "version": "1.2.0",
   "description": "commitlint-config for git commit",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
