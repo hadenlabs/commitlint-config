@@ -26,7 +26,7 @@ tasks:
     silent: true
     cmds:
       - >-
-        {{.PYTHON_PACKAGE_MANAGER}} run bump-my-version show current_version --config-file packages/commitlint-config-core/bump-docs.toml
+        uvx run bump-my-version show current_version --config-file packages/commitlint-config-core/bump-docs.toml
 
   version:major:
     run: once
@@ -34,7 +34,7 @@ tasks:
     silent: true
     cmds:
       - >-
-        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump major --no-commit --config-file packages/commitlint-config-core/bump-docs.toml
+        uvx bump-my-version bump major --no-commit --config-file packages/commitlint-config-core/bump-docs.toml
 
   version:minor:
     run: once
@@ -42,7 +42,7 @@ tasks:
     silent: true
     cmds:
       - >-
-        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump minor --no-commit --config-file packages/commitlint-config-core/bump-docs.toml
+        uvx bump-my-version bump minor --no-commit --config-file packages/commitlint-config-core/bump-docs.toml
 
   version:patch:
     run: once
@@ -50,14 +50,14 @@ tasks:
     silent: true
     cmds:
       - >-
-        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump patch -no-commit --config-file packages/commitlint-config-core/bump-docs.toml
+        uvx bump-my-version bump patch -no-commit --config-file packages/commitlint-config-core/bump-docs.toml
 
   version:pre_release:
     run: once
     desc: "Increase pre_release version"
     cmds:
       - >-
-        {{.PYTHON_PACKAGE_MANAGER}} bump-my-version bump pre_release -no-commit --config-file packages/commitlint-config-core/bump-docs.toml
+        uvx bump-my-version bump pre_release -no-commit --config-file packages/commitlint-config-core/bump-docs.toml
 
   release:major:
     desc: Release major (version bump + next changelog)
